@@ -7,7 +7,7 @@ export default function Home() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
 
   const handleFilesUploaded = (files: File[]) => {
-    setUploadedFiles(files)
+    setUploadedFiles(prevFiles => [...prevFiles, ...files])
     // Here you would typically start processing the files
     console.log('Files uploaded:', files)
   }
@@ -21,7 +21,7 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-4">Uploaded Files:</h2>
           <ul>
             {uploadedFiles.map((file, index) => (
-              <li key={index} className="text-sm text-gray-600">{file.name}</li>
+              <li key={index} className="text-sm text-gray-600 dark:text-gray-300">{file.name}</li>
             ))}
           </ul>
         </div>
