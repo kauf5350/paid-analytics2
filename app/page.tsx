@@ -1,15 +1,22 @@
 'use client'
 
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import CSVUploader from '@/components/csv-uploader'
 import { useCSVData } from '@/hooks/use-csv-data'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 export default function Home() {
-  const { isLoading, error, parseFiles } = useCSVData()
+  const router = useRouter()
+  const { isLoading, error, parseFiles, hasData } = useCSVData()
 
   const handleFilesUploaded = (files: File[]) => {
     parseFiles(files)
+  }
+
+  const handleVisualize = () => {
+    router.push('/visualize')
   }
 
   return (
@@ -28,6 +35,12 @@ export default function Home() {
             <p className="text-red-600 dark:text-red-300">{error}</p>
           </CardContent>
         </Card>
+      )}
+
+      {hasData && (
+        <Button onClick={handleVisualize} className="mt-6">
+          Visualize Data
+        </Button>
       )}
     </main>
   )
